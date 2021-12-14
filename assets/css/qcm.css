@@ -1,10 +1,4 @@
-form {
-	/* width:100px; */
 
-	margin:50px auto 0 auto;
-	margin-left: 150px;
-	margin-right: 150px;
-}
 li {
 	list-style:none;
 }
@@ -56,11 +50,6 @@ td[id*='dr'] {
 	font-style:italic;
 	background:#9cbdc7;
 	color:#fff;
-}
-h4 {
-	margin:0;
-	font-weight:normal;
-	text-align:left;
 }
 #main {
 	color:#000;
