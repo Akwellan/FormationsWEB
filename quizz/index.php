@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<meta charset="UTF-8">
-<title>Page Title</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="../assets/css/qcm.css" />
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Quiz - modèle</title>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link href="./style.css" rel="stylesheet">
+</head>
 
 <body>
 
@@ -38,8 +44,9 @@
     </div>
   </div>
 
+  <script src="./script.js" type="text/javascript" ></script>
 </body>
 
-<script src="../assets/js/qcm.js"></script>
+
 
 </html>

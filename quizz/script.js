@@ -15,8 +15,6 @@ let questions = [
   new Question("Quel objet Javascript permet d'arrondir à l'entier le plus proche", ["Math.ceil()","Math.floor()", "Math.round()", "Math.random()"], "Math.round()")
 ];
 
-console.log(questions);
-
 class Quiz {
   constructor(questions) {
     this.score = 0;
@@ -37,7 +35,6 @@ class Quiz {
   }
 }
 
-// Regroup all  functions relative to the App Display
 const display = {
   elementShown: function(id, text) {
     let element = document.getElementById(id);
@@ -61,7 +58,7 @@ const display = {
         quizApp();
       }
     }
-    // display choices and handle guess
+    // affichage choix + prise en compte du choix
     for(let i = 0; i < choices.length; i++) {
       this.elementShown("choice" + i, choices[i]);
       guessHandler("guess" + i, choices[i]);
@@ -69,7 +66,7 @@ const display = {
   },
   progress: function() {
     let currentQuestionNumber = quiz.currentQuestionIndex + 1;
-    this.elementShown("progress", "Question " + currentQuestionNumber + " sur " + quiz.questions.length);
+    this.elementShown("progress", "<br>Question " + currentQuestionNumber + " sur " + quiz.questions.length);
   },
 };
 
@@ -86,5 +83,3 @@ quizApp = () => {
 // Create Quiz
 let quiz = new Quiz(questions);
 quizApp();
-
-console.log(quiz);
