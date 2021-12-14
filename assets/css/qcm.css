@@ -1,0 +1,116 @@
+form {
+	/* width:100px; */
+
+	margin:50px auto 0 auto;
+	margin-left: 150px;
+	margin-right: 150px;
+}
+li {
+	list-style:none;
+}
+input[type=text] {
+	font-size:16pt;
+	text-align:center;
+}
+table {
+	width:100%;
+	border-spacing:0;
+	border-width:2px;
+	border-color:#8a8a7b;
+	-webkit-border-radius:10px;
+	   -moz-border-radius:10px;
+			border-radius:10px;
+}
+table tr:first-child td:first-child {
+	-webkit-border-radius:10px 0 0 0;
+	   -moz-border-radius:10px 0 0 0;
+			border-radius:10px 0 0 0;
+}
+table tr:first-child td:last-child {
+	-webkit-border-radius:0 10px 0 0;
+	   -moz-border-radius:0 10px 0 0;
+			border-radius:0 10px 0 0;
+}
+table tr:last-child td:first-child {
+	-webkit-border-radius:0 0 0 10px;
+	   -moz-border-radius:0 0 0 10px;
+			border-radius:0 0 0 10px;
+}
+table tr:last-child td:last-child {
+	-webkit-border-radius:0 0 10px 0;
+	   -moz-border-radius:0 0 10px 0;
+			border-radius:0 0 10px 0;
+}
+td {
+	font-size:14pt;
+	padding:5px;
+}
+table tr:first-child td {
+	text-align:center;
+	color:gray;
+}
+td[id*='dr'] {
+	background:#fafafa;
+}
+.quest {
+	font-style:italic;
+	background:#9cbdc7;
+	color:#fff;
+}
+h4 {
+	margin:0;
+	font-weight:normal;
+	text-align:left;
+}
+#main {
+	color:#000;
+}
+#main li {
+	color:#000;
+	font-size:130%;
+}
+input[value='Recommencer']{
+	-webkit-border-radius:5px;
+	   -moz-border-radius:5px;
+			border-radius:5px;
+	cursor:pointer;
+	font-size:12pt;
+}
+#btnPrec, #btnSuiv {
+	background:#bbbbbb;
+	font-size:150%;
+	padding:25px;
+	border:none;
+	cursor:pointer;
+	-webkit-border-radius:10px;
+	   -moz-border-radius:10px;
+			border-radius:10px;
+}
+#btnPrec:hover, #btnSuiv:hover {
+	background:#dbdbea;
+}
+.noResponse {
+	font-size:70%;
+	font-weight:normal;
+	font-style:italic;
+	color:gray;
+}
+#copyr {
+	text-align:center;
+	font-size:80%;
+	color:gray;
+}
+a:link, a:visited {color:gray;}
+a:hover {color:blue;}
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+@media screen and (max-width:810px){
+	h1 {font-size:120%;}
+	tr:nth-child(3) td:first-child, tr:nth-child(3) td:last-child {width:30px;}
+	table {width:100%;}
+	table tr:first-child td {font-size:12pt;}
+	td {font-size:13pt;}
+	h4 {font-size:110%;}
+	#main li {font-size:100%;}
+	form {width:100%;margin:50px auto 0 auto;}
+	#btnPrec, #btnSuiv {font-size:120%;padding:5px;}
+}
