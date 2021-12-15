@@ -48,7 +48,7 @@
 										if ($result->num_rows > 0) {
 										  // output data of each row
 										  while($row = $result->fetch_assoc()) {
-										    echo "<p><h3><a href='../qcm/".$row["fichier"]."?qcm=".$row["id"]."'>⇒ ".$row["nom"]." :</a></h3>".$row["description"]."</p>";
+										    echo "<p><h3><a href='../pages/questionnaire.php?qcm=".$row["id"]."'>⇒ ".$row["nom"]." :</a></h3>".$row["description"]."</p>";
 										  }
 										} else {
 										  echo "<p><h3 style='text-align: center'>Aucune formations disponibles</h3></p>";

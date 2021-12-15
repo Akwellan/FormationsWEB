@@ -1,5 +1,5 @@
 var numQues = 3;
-var numChoi = 4;
+var numChoi = 3;
 
 var answers = new Array();
 

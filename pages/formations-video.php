@@ -56,7 +56,7 @@
 															    function myHandler(e) {
 																			let text = 'Votre formations est fini ! <br>Voulez vous lancer le QCM ?';
 																			if (window.confirm(text)) {
-																				document.location.href='../qcm/".$row["fichier"]."';
+																				document.location.href='../pages/questionnaire.php?qcm=".$row["id"]."';
 																			}
 															    }
 															</script>
