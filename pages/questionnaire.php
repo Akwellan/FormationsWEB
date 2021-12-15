@@ -80,6 +80,7 @@
 
 									<form class="quiz" name="quiz">
 
+										<!-- SELECT REPONSE -->
 										<?php
 											include '../bdd/connect.php';
 											$dbname = "formations";
@@ -116,14 +117,18 @@
 												}
 												$nbques++;
 												echo "<script type='text/javascript'>var numChoi = ".$nbques.";</script>";
-											}
+												echo "<input type='button' value='Valider' onClick='getScore(this.form)'>&nbsp;&nbsp;&nbsp;
+										<input type='reset' value='Réinitialiser'><p><br>
+										Score : <input type=text size=15 name='percentage'>";
+									} else {
+										echo " Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";
+									}
 
 											include '../bdd/deconnect.php';
 										?>
+										<!-- SELECT REPONSE -->
 
-										<input type="button" value="Valider" onClick="getScore(this.form)">&nbsp;&nbsp;&nbsp;
-										<input type="reset" value="Réinitialiser"><p><br>
-										Score : <input type=text size=15 name="percentage">
+
 									</form>
 
 								</article>
