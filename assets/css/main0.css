@@ -60,13 +60,11 @@ mark {
 	color: inherit;
 }
 
-/* input::-moz-focus-inner {
-	border: 5;
-	padding: 5;
-} */
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
 
-
-/* input, select, textarea { */
 select, textarea {
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -99,8 +97,7 @@ select, textarea {
 		transition: none !important;
 	}
 
-		body, textarea, select {
-	/* body, input, textarea, select { */
+	body, input, textarea, select {
 		font-family: 'Source Sans Pro', sans-serif;
 		font-weight: 400;
 		color: #919499;
@@ -2419,8 +2416,7 @@ select, textarea {
 
 		/* Basic */
 
-					body, textarea, select {
-			/* body, input, textarea, select { */
+			body, input, textarea, select {
 				font-size: 12pt;
 			}
 
@@ -2431,8 +2427,8 @@ select, textarea {
 	@media screen and (max-width: 1280px) {
 
 		/* Basic */
-/* body, input, select, textarea { */
-			body, select, textarea {
+
+			body, input, select, textarea {
 				font-size: 11pt;
 				line-height: 1.5em;
 				letter-spacing: 0.015em;
@@ -2755,8 +2751,7 @@ select, textarea {
 
 		/* Basic */
 
-					/* body, input, select, textarea { */
-			body, select, textarea {
+			body, input, select, textarea {
 				line-height: 1.5em;
 				font-size: 10.5pt;
 				letter-spacing: 0;

@@ -6,6 +6,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/checkbox.css" />
 	</head>
 
 	</style>
@@ -25,91 +26,103 @@
 							<div id="content">
 								<article class="box post">
 
-									<script language="JavaScript">
-									<!--
+									<script src="../assets/js/qcm.js"></script>
 
-									var numQues = 0;
-									var numChoi = 4;
+									<!-- SELECT COUNT -->
+									<?php
+										include '../bdd/connect.php';
+										$dbname = "formations";
 
-									var answers = new Array();
-									answers[0] = "Praesent , hendrerit, ";
-									answers[1] = "Praesent , ";
-									answers[2] = "Curabitur , Praesent , ";
+										// Create connection
+										$conn = new mysqli($servername, $username, $password, $dbname);
+										// Check connection
+										if ($conn->connect_error) {
+											die("Connection failed: " . $conn->connect_error);
+										}
 
-									numQues = count(answers());
+										$sql = "SELECT COUNT(*) FROM `question` WHERE `id_formations`=".$nb_qcm;
+										$result = $conn->query($sql);
 
-									function getScore(form) {
-									  var score = 0;
-									  var currElt;
-									  var currSelection;
-									  var bon = false;
+										if ($result->num_rows > 0) {
+											while($row = $result->fetch_assoc()) {
+												echo "<script type='text/javascript'>numQues = ".$row["COUNT(*)"].";</script>";
+											}
+										}
+										include '../bdd/deconnect.php';
+									?>
+									<!-- SELECT COUNT -->
 
-									  for (i=0; i<numQues; i++) {
-									    currElt = i*numChoi;
-									    bon=false;
-									    for (j=0; j<numChoi; j++) {
-									      currSelection = form.elements[currElt + j];
-									      if ((currSelection.checked)&&(answers[i].indexOf(currSelection.value) != -1)) {
-									        bon=true;}
-									      if ((currSelection.checked)&&(answers[i].indexOf(currSelection.value) == -1)) {
-									        bon=false;
-									        break;
-									        }
-									      if (!(currSelection.checked)&&(answers[i].indexOf(currSelection.value) != -1)) {
-									        bon=false;
-									        break;
-									        }
-									    }
-									    if (bon==true) {score++}
-									  }
+									<!-- SELECT REPONSE -->
+									<?php
+										include '../bdd/connect.php';
+										$dbname = "formations";
 
-									  score = Math.round(score/numQues*100);
-									  form.percentage.value = score + "%";
+										// Create connection
+										$conn = new mysqli($servername, $username, $password, $dbname);
+										// Check connection
+										if ($conn->connect_error) {
+											die("Connection failed: " . $conn->connect_error);
+										}
 
-									  var correctAnswers = "";
-									  for (i=1; i<=numQues; i++) {
-									    correctAnswers += i + ". " + answers[i-1] + "\r\n";
-									  }
-									  form.solutions.value = correctAnswers;
+										$sql = "SELECT `id`,`nom`,`description`,`reponse`,`reponse_vrai`,`id_formations` FROM `question` WHERE `id_formations`=".$nb_qcm;
+										$result = $conn->query($sql);
 
-									}
+										if ($result->num_rows > 0) {
+											$i = 0;
+											while($row = $result->fetch_assoc()) {
+												echo "<script type='text/javascript'>answers[".$i."] = '".$row["reponse_vrai"]."';</script>";
+												echo $i;
+												$i++;
+											}
+										}
+										include '../bdd/deconnect.php';
+									?>
+									<!-- SELECT REPONSE -->
 
-									// -->
-									</script>
+									<form class="quiz" name="quiz">
 
-									<script>
-										answers[3] = "fdhgd , sfgdf , ";
-										answers[4] = "fdhgd , sfgdf , ";
-										alert(count(answers));
-									</script>
+										<?php
+											include '../bdd/connect.php';
+											$dbname = "formations";
 
-									<form name="quiz">
-									<b>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b><br>
-									<input type="checkbox" name="q1" value="Praesent ">Praesent <br>
-									<input type="checkbox" name="q1" value="hendrerit">hendrerit<br>
-									<input type="checkbox" name="q1" value="accumsan ">accumsan <br>
-									<input type="checkbox" name="q1" value="Curabitur ">Curabitur <br>
-									<p>
+											// Create connection
+											$conn = new mysqli($servername, $username, $password, $dbname);
+											// Check connection
+											if ($conn->connect_error) {
+												die("Connection failed: " . $conn->connect_error);
+											}
 
-									<b>2. Pellentesque dignissim vehicula mauris, eget ornare nunc lobortis ac. </b><br>
-									<input type="checkbox" name="q2" value="orci">orci<br>
-									<input type="checkbox" name="q2" value="sed ">sed <br>
-									<input type="checkbox" name="q2" value="Praesent ">Praesent <br>
-									<input type="checkbox" name="q2" value="pharetra">pharetra<br>
-									<p>
+											$sql = "SELECT `id`,`nom`,`description`,`reponse`,`reponse_vrai`,`id_formations` FROM `question` WHERE `id_formations`=".$nb_qcm;
+											$result = $conn->query($sql);
 
-									<b>3. Duis venenatis libero vestibulum cursus pharetra. Nam quis nunc orci.</b><br>
-									<input type="checkbox" name="q3" value="Curabitur ">Curabitur <br>
-									<input type="checkbox" name="q3" value="congue ">congue <br>
-									<input type="checkbox" name="q3" value="ullamcorper ">ullamcorper <br>
-									<input type="checkbox" name="q3" value="Praesent ">Praesent <br>
-									<p>
+											if ($result->num_rows > 0) {
+												// output data of each row
+												$i = 1;
+												while($row = $result->fetch_assoc()) {
+													$numQuestion = $i;
+													$titre=$row["nom"];
+													$description=$row["description"];
+													$question=$row["reponse"];
+													$questions = array();
+													$questions=explode('|',$question);
+													echo "<b>".$numQuestion.") ".$titre." -> ".$description."</b>";
+													$nbQuestions = sizeof($questions);
+													for ($x=0;$x<$nbQuestions;$x++) {
+														echo "<div class='form-group'><input type='checkbox' name='q".$i."' value='".$questions[$x]."' id='".$questions[$x]."'><label class='rep' for='".$questions[$x]."'>".$questions[$x]."</label></div>";
+													}
+													$i++;
+													echo "<br>";
+												}
+											}
 
-									<input type="button" value="Score" onClick="getScore(this.form)">
-									<input type="reset" value="RAZ"><p>
-									Score = <input type=text size=15 name="percentage"><br>
-									Réponses correctes :<br>
-									<textarea name="solutions" wrap="virtual" rows="4" cols="40"></textarea>
+											include '../bdd/deconnect.php';
+										?>
+
+										<input type="button" value="Score" onClick="getScore(this.form)">
+										<input type="reset" value="RAZ"><p>
+										Score = <input type=text size=15 name="percentage"><br>
+										Réponses correctes :<br>
+										<textarea name="solutions" wrap="virtual" rows="4" cols="40"></textarea>
 									</form>
 
 								</article>
