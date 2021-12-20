@@ -1,9 +1,11 @@
+<?php include '../connexion/session.php';  ?>
 <!DOCTYPE HTML>
 <?php $nb_formations = $_GET["formations"]; ?>
 <html>
 	<head>
 		<title>Formations</title>
 		<meta charset="utf-8" />
+		<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<link rel="stylesheet" href="../assets/css/video.css" />
@@ -54,7 +56,7 @@
 																<script type='text/javascript'>
 															    document.getElementById('idvideo').addEventListener('ended',myHandler,false);
 															    function myHandler(e) {
-																			let text = 'Votre formations est fini ! <br>Voulez vous lancer le QCM ?';
+																			let text = 'Votre formations est fini ! Voulez vous lancer le QCM ?';
 																			if (window.confirm(text)) {
 																				document.location.href='../pages/questionnaire.php?qcm=".$row["id"]."';
 																			}

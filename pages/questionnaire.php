@@ -1,9 +1,11 @@
+<?php include '../connexion/session.php';  ?>
 <!DOCTYPE HTML>
 <?php $nb_qcm = $_GET["qcm"]; ?>
 <html>
 	<head>
 		<title>Formations</title>
 		<meta charset="utf-8" />
+		<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<link rel="stylesheet" href="../assets/css/checkbox.css" />
@@ -19,12 +21,36 @@
 
 			<!-- Main -->
 				<div id="main" class="wrapper style2">
-					<div class="title">Formations</div>
+					<div class="title">Questionnaire</div>
 					<div class="container">
 
 						<!-- Content -->
 							<div id="content">
 								<article class="box post">
+
+									<!-- AFFICHE READ -->
+									<?php
+										include '../bdd/connect.php';
+										$dbname = "formations";
+										// Create connection
+										$conn = new mysqli($servername, $username, $password, $dbname);
+										// Check connection
+										if ($conn->connect_error) {
+										  die("Connection failed: " . $conn->connect_error);
+										}
+										$sql = "SELECT `id`,`nom`,`fichier`,`description`,`groupe`,`video` FROM `formations` WHERE `id` = ".$nb_qcm;
+										$result = $conn->query($sql);
+										if ($result->num_rows > 0) {
+										  // output data of each row
+										  while($row = $result->fetch_assoc()) {
+												echo "<header class='style1'><h2>Questionnaire : ".$row["nom"]."</h2>";
+												echo "<p>Bonne chance pou votre QCM !</p></header>";
+										  }
+										}
+
+										include '../bdd/deconnect.php';
+									?>
+									<!-- AFFICHE READ -->
 
 									<script src="../assets/js/qcm.js"></script>
 
@@ -118,16 +144,15 @@
 												$nbques++;
 												echo "<script type='text/javascript'>var numChoi = ".$nbques.";</script>";
 												echo "<input type='button' value='Valider' onClick='getScore(this.form)'>&nbsp;&nbsp;&nbsp;
-										<input type='reset' value='Réinitialiser'><p><br>
-										Score : <input type=text size=15 name='percentage'>";
-									} else {
-										echo " Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";
-									}
+												<input type='reset' value='Réinitialiser'><p><br>
+												Score : <input type=text size=15 name='percentage'>";
+											} else {
+												echo " Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";
+											}
 
 											include '../bdd/deconnect.php';
 										?>
 										<!-- SELECT REPONSE -->
-
 
 									</form>
 
