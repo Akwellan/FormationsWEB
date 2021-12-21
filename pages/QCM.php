@@ -39,7 +39,7 @@
 										  die("Connection failed: " . $conn->connect_error);
 										}
 
-										$sql = "SELECT `id`,`nom`,`fichier`,`description`,`groupe` FROM `qcm`";
+										$sql = "SELECT `id`,`nom`,`fichier`,`description`,`groupe` FROM `formations`";
 										$result = $conn->query($sql);
 
 										if ($result->num_rows > 0) {

@@ -91,7 +91,7 @@
 									</div>
 									<div class="buttonRetourHome">
 										<a href="/Formation/SiteWEB/pages/formations.php"><button>Retourner aux Formations</button></a>
-										<a href="Formation/SiteWEB/"><button>Retourner à l'accueil</button></a>
+										<a href="/Formation/SiteWEB/"><button>Retourner à l'accueil</button></a>
 									</div>
 								</article>
 							</div>
