@@ -65,6 +65,10 @@ mark {
 	padding: 5;
 } */
 
+.resultat {
+	text-align: center;
+}
+
 
 /* input, select, textarea { */
 select, textarea {
@@ -1636,7 +1640,7 @@ select, textarea {
 		-ms-transition: all .25s ease-in-out;
 		transition: all .25s ease-in-out;
 		display: inline-block;
-		background: #444;
+		background: #DF726B;
 		text-align: center;
 		text-transform: uppercase;
 		font-weight: 700;
@@ -2987,4 +2991,9 @@ select, textarea {
 							margin-top: 0;
 						}
 
+	}
+
+
+	.resultat {
+		text-align: center;
 	}

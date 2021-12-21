@@ -44,7 +44,7 @@
 										  // output data of each row
 										  while($row = $result->fetch_assoc()) {
 												echo "<header class='style1'><h2>Questionnaire : ".$row["nom"]."</h2>";
-												echo "<p>Bonne chance pou votre QCM !</p></header>";
+												echo "<p>Bonne chance pour votre QCM !</p></header>";
 										  }
 										}
 
@@ -104,7 +104,9 @@
 									?>
 									<!-- SELECT REPONSE -->
 
-									<form class="quiz" name="quiz">
+									<form class="quiz" name="quiz" method="post">
+
+										<?php	echo "<script type='text/javascript'>var user = '".$_SESSION['user']."';var nb_ques = ".$nb_qcm.";</script>";?>
 
 										<!-- SELECT REPONSE -->
 										<?php
@@ -143,14 +145,16 @@
 												}
 												$nbques++;
 												echo "<script type='text/javascript'>var numChoi = ".$nbques.";</script>";
-												echo "<input type='button' value='Valider' onClick='getScore(this.form)'>&nbsp;&nbsp;&nbsp;
-												<input type='reset' value='Réinitialiser'><p><br>
-												Score : <input type=text size=15 name='percentage'>";
+												echo "<input type='button' name='Valider' value='Valider et envoyer les réponses' onClick='main(this.form);'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type='reset' value='Redémarrer le QCM'>&nbsp;&nbsp;&nbsp<p><br>
+												";
 											} else {
-												echo " Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";
+												echo "Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";
 											}
 
 											include '../bdd/deconnect.php';
+
+
 										?>
 										<!-- SELECT REPONSE -->
 
@@ -174,6 +178,7 @@
 			<script src="../assets/js/jquery.dropotron.min.js"></script>
 			<script src="../assets/js/browser.min.js"></script>
 			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 			<script src="../assets/js/util.js"></script>
 			<script src="../assets/js/main.js"></script>
 

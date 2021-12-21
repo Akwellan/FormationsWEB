@@ -1,10 +1,21 @@
 var numQues = 3;
 var numChoi = 3;
+var score = 0;
+var user;
+var nb_ques;
 
 var answers = new Array();
 
+function ConfirmMessage() {
+   let URL = "../bdd/insert-reussi.php?db=formations&score="+score+"&name="+user+"&numQCM="+nb_ques;
+   if (confirm("Avez vous fini le QCM ?")) {
+       // Clic sur OK
+       document.location.href=URL;
+   }
+}
+
 function getScore(form) {
-  var score = 0;
+  score = 0;
   var currElt;
   var currSelection;
   var bon = false;
@@ -29,12 +40,11 @@ function getScore(form) {
   }
 
   score = Math.round(score/numQues*100);
-  form.percentage.value = score + "%";
+  //form.percentage.value = score + "% - "+ user+ " - "+ nb_ques;
 
-  var correctAnswers = "";
-  for (i=1; i<=numQues; i++) {
-    correctAnswers += i + ". " + answers[i-1] + "\r\n";
-  }
-  form.solutions.value = correctAnswers;
+}
 
+function main(form) {
+  getScore(form);
+  ConfirmMessage();
 }
