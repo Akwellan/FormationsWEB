@@ -39,7 +39,7 @@
 										  die("Connection failed: " . $conn->connect_error);
 										}
 
-										$sql = "SELECT `id`,`nom`,`fichier`,`description`,`groupe`,`video` FROM `formations` WHERE `id` = ".$nb_formations;
+										$sql = "SELECT `id`,`nom`,`description`,`groupe`,`video` FROM `formations` WHERE `id` = ".$nb_formations;
 										$result = $conn->query($sql);
 
 										if ($result->num_rows > 0) {

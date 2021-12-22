@@ -28,6 +28,34 @@
 										<p>Vous retrouvez ici, tous les formations disponible sous forme de VIDEO.</p>
 									</header>
 
+									<!-- Recuperer SCORE USER -->
+									<?php
+									function getScore($nb_qcm,$user) {
+										include '../bdd/connect.php';
+										$dbname = "formations";
+										// Create connection
+										$conn = new mysqli($servername, $username, $password, $dbname);
+										// Check connection
+										if ($conn->connect_error) {
+											die('Connection failed: ' . $conn->connect_error);
+										}
+										$score="";
+										$sql = "SELECT `point` FROM `reussite` WHERE `user`='".$user."' AND `id_formations`=".$nb_qcm;
+										$result = $conn->query($sql);
+										if ($result->num_rows > 0) {
+											while($row = $result->fetch_assoc()) {
+												$score = $row["point"];
+											}
+										}
+										include '../bdd/deconnect.php';
+										if($score != ""){
+											return $score;
+										}
+									}
+
+									?>
+									<!-- Recuperer SCORE USER -->
+
 									<?php
 										include '../bdd/connect.php';
 										$dbname = "formations";
@@ -38,14 +66,20 @@
 										if ($conn->connect_error) {
 										  die("Connection failed: " . $conn->connect_error);
 										}
-
-										$sql = "SELECT `id`,`nom`,`fichier`,`description`,`groupe` FROM `formations`";
+										$sql = "SELECT `id`,`nom`,`description`,`groupe`,`video` FROM `formations` WHERE INSTR('".$_SESSION["groupe"]."',`groupe`)<>0;";
 										$result = $conn->query($sql);
 
 										if ($result->num_rows > 0) {
 										  // output data of each row
 										  while($row = $result->fetch_assoc()) {
-										    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a></h3>".$row["description"]."</p>";
+												$score = getScore($row["id"],$_SESSION["user"]);
+												if($score > 70) {
+										    	echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:green;\"> Questionnaire reussi à $score%</span></h3>".$row["description"]."</p>";
+												} elseif ($score < 70 && $score != "") {
+											    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:red;\"> Questionnaire échoué à $score%</span></h3>".$row["description"]."</p>";
+												} else {
+											    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a></h3>".$row["description"]."</p>";
+												}
 										  }
 										} else {
 										  echo "<p><h3 style='text-align: center'>Aucune formations disponibles</h3></p>";

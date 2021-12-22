@@ -1,38 +1,46 @@
 <?php
-   $erreur="";
-function auth($username, $password, $domain = 'icare-lims', $endpoint = 'ldap://icare-lims.local', $dc = 'dc=icare-lims,dc=local') {
-	$ldap = @ldap_connect($endpoint);
-	if(!$ldap) return false;
+  $erreur="";
+  function auth($username, $password, $domain = 'icare-lims', $endpoint = 'ldap://icare-lims.local', $dc = 'dc=icare-lims,dc=local') {
+  	$ldap = @ldap_connect($endpoint);
+  	if(!$ldap) return false;
 
-	ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-	ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+  	ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+  	ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
-	$bind = @ldap_bind($ldap, "$domain\\$username", $password);
-	if(!$bind) return false;
+  	$bind = @ldap_bind($ldap, "$domain\\$username", $password);
+  	if(!$bind) return false;
 
-	$result = @ldap_search($ldap, $dc, "(sAMAccountName=$username)");
-	if(!$result) return false;
+  	$result = @ldap_search($ldap, $dc, "(sAMAccountName=$username)");
+  	if(!$result) return false;
 
-	@ldap_sort($ldap, $result, 'sn');
-	$info = @ldap_get_entries($ldap, $result);
-	if(!$info) return false;
-	if(!isset($info['count']) || $info['count'] !== 1) return false;
+  	@ldap_sort($ldap, $result, 'sn');
+  	$info = @ldap_get_entries($ldap, $result);
+  	if(!$info) return false;
+  	if(!isset($info['count']) || $info['count'] !== 1) return false;
 
-	$data = [];
+  	$data = [];
 
-	foreach($info[0] as $key => $value) {
-		if(is_numeric($key)) continue;
-		if($key === 'count') continue;
+    $allGroupe = "";
 
-		$data[$key] = (array)$value;
-		unset($data[$key]['count']);
-	}
+    foreach($info[0]["memberof"] AS $groupe)
+    {
+      $allGroupe = $allGroupe.substr($groupe, 0, -44);
+    }
 
-	return [
-		'mail' => $data['mail'][0],
-		'displayname' => $data['displayname'][0]
-	];
-}
+  	foreach($info[0] as $key => $value) {
+  		if(is_numeric($key)) continue;
+  		if($key === 'count') continue;
+
+  		$data[$key] = (array)$value;
+  		unset($data[$key]['count']);
+  	}
+
+  	return [
+  		'mail' => $data['mail'][0],
+      'memberof' => $allGroupe,
+  		'displayname' => $data['displayname'][0]
+  	];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,6 +110,7 @@ function auth($username, $password, $domain = 'icare-lims', $endpoint = 'ldap://
 					echo '<div class="alert alert-success text-center">Login success</div><h1 class="text-center"><a href="mailto:' . $info['mail'] . '">' . $info['displayname'] . '</a></h1>';
 					sleep(1);
 					$_SESSION["user"]=$_POST['username'];
+					$_SESSION["groupe"]=$info['memberof'].",DC=ALL";;
 					$_SESSION["autoriser"]="oui";
 							header("location:/Formation/SiteWEB/");
 				}
