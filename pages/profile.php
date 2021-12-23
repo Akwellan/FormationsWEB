@@ -3,8 +3,8 @@
 <html>
 	<head>
 		<title>Formations</title>
-		<meta charset="utf-8" />
 		<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
 	</head>
@@ -24,8 +24,8 @@
 							<div id="content">
 								<article class="box post">
 									<header class="style1">
-										<h2>Questionnaire disponible</h2>
-										<p>Vous retrouvez ici, tous les questionnaires disponible sous forme de QCM.</p>
+										<h2>Formations disponible</h2>
+										<p>Vous retrouvez ici, tous les formations disponible sous forme de VIDEO.</p>
 									</header>
 
 									<!-- Recuperer SCORE USER -->
@@ -55,40 +55,6 @@
 
 									?>
 									<!-- Recuperer SCORE USER -->
-
-									<?php
-										include '../bdd/connect.php';
-										$dbname = "formations";
-
-										// Create connection
-										$conn = new mysqli($servername, $username, $password, $dbname);
-										// Check connection
-										if ($conn->connect_error) {
-										  die("Connection failed: " . $conn->connect_error);
-										}
-
-										$sql = "SELECT `id`,`nom`,`description`,`groupe` FROM `formations` WHERE INSTR('".$_SESSION["groupe"]."',`groupe`)<>0;";
-										$result = $conn->query($sql);
-
-										if ($result->num_rows > 0) {
-										  // output data of each row
-										  while($row = $result->fetch_assoc()) {
-												$score = getScore($row["id"],$_SESSION["user"]);
-												if($score > 70) {
-										    	echo "<p><h3><a href='questionnaire.php?qcm=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:green;\"> Questionnaire reussi à $score%</span></h3>".$row["description"]."</p>";
-												} elseif ($score < 70 && $score != "") {
-											    echo "<p><h3><a href='questionnaire.php?qcm=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:red;\"> Questionnaire échoué à $score%</span></h3>".$row["description"]."</p>";
-												} else {
-											    echo "<p><h3><a href='questionnaire.php?qcm=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:#212534;\"> Questionnaire à faire !</span></h3>".$row["description"]."</p>";
-												}
-										  }
-										} else {
-										  echo "<p><h3 style='text-align: center'>Aucune formations disponibles</h3></p>";
-										}
-
-										include '../bdd/deconnect.php';
-									?>
-
 
 								</article>
 							</div>

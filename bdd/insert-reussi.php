@@ -37,15 +37,16 @@
 
 
 <?php
-
+  $nowDate = date('Y-n-j');
+  echo $nowDate;
   if($countQCM == 0){
     echo "<script>alert(\"$countQCM == 0\")</script>";
-    insert($name,$score,$numQCM,$dbname);
+    insert($name,$score,$numQCM,$dbname,$nowDate);
   } else {
     $scoreMaintenant = $score;
-    $scoreAvant = getScore($name,$numQCM,$dbname);
+    $scoreAvant = getScore($name,$numQCM,$dbname,$nowDate);
     if($scoreMaintenant > $scoreAvant) {
-      update($name,$score,$numQCM,$dbname);
+      update($name,$score,$numQCM,$dbname,$nowDate);
     }else {
       returnHome($numQCM);
     }
@@ -57,7 +58,7 @@
 <?php
 
   // Fonction d'insert dans la BDD
-  function insert($name,$score,$numQCM,$dbname) {
+  function insert($name,$score,$numQCM,$dbname,$nowDate) {
     include '../bdd/connect.php';
 
     // Create connection
@@ -67,7 +68,7 @@
       die('Connection failed: ' . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO `reussite` (`id`, `user`, `point`, `id_formations`) VALUES (NULL,'".$name."', '".$score."', '".$numQCM."')";
+    $sql = "INSERT INTO `reussite` (`id`, `user`, `point`, `date`, `id_formations`) VALUES (NULL,'".$name."', '".$score."', '".$nowDate."', '".$numQCM."')";
 
     if ($conn->query($sql) === TRUE) {
     } else {
@@ -80,7 +81,7 @@
   // Fonction d'insert dans la BDD
 
   // Fonction d'update dans la BDD
-  function update($name,$score,$numQCM,$dbname) {
+  function update($name,$score,$numQCM,$dbname,$nowDate) {
     include '../bdd/connect.php';
 
     // Create connection
@@ -90,7 +91,7 @@
       die('Connection failed: ' . $conn->connect_error);
     }
 
-    $sql = "UPDATE `reussite` SET `point` = '".$score."' WHERE `reussite`.`user`='".$name."' AND `reussite`.`id_formations`=".$numQCM;
+    $sql = "UPDATE `reussite` SET `point` = '".$score."', `date` = '".$nowDate."' WHERE `reussite`.`user`='".$name."' AND `reussite`.`id_formations`=".$numQCM;
 
     if ($conn->query($sql) === TRUE) {
 

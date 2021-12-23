@@ -13,11 +13,11 @@
 
 			<!-- Header -->
 
-				<?php include '../construct/header.php';  ?>
+			<?php include '../construct/header.php';  ?>
 
 			<!-- Main -->
 				<div id="main" class="wrapper style2">
-					<div class="title">Questionnaire</div>
+					<div class="title">Formations</div>
 					<div class="container">
 
 						<!-- Content -->
@@ -78,7 +78,7 @@
 												} elseif ($score < 70 && $score != "") {
 											    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:red;\"> Questionnaire échoué à $score%</span></h3>".$row["description"]."</p>";
 												} else {
-											    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a></h3>".$row["description"]."</p>";
+											    echo "<p><h3><a href='formations-video.php?formations=".$row["id"]."'>⇒ ".$row["nom"]." :</a><span style=\"color:#212534;\"> Questionnaire à faire !</span></h3>".$row["description"]."</p>";
 												}
 										  }
 										} else {
@@ -103,12 +103,12 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
 
 	</body>
 </html>
