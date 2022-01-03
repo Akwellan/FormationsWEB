@@ -24,8 +24,8 @@
 							<div id="content">
 								<article class="box post">
 									<header class="style1">
-										<h2>Formations disponible</h2>
-										<p>Vous retrouvez ici, tous les formations disponible sous forme de VIDEO.</p>
+										<h2>Formations disponibles</h2>
+										<p>Vous retrouvez ici, tous les formations disponibles sous forme de VIDEO.</p>
 									</header>
 
 									<!-- Recuperer SCORE USER -->

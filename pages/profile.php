@@ -10,11 +10,8 @@
 	</head>
 	<body class="no-sidebar is-preload">
 		<div id="page-wrapper">
-
 			<!-- Header -->
-
-				<?php include '../construct/header.php';  ?>
-
+			<?php include '../construct/header.php';  ?>
 			<!-- Main -->
 				<div id="main" class="wrapper style2">
 					<div class="title">Questionnaire</div>

@@ -38,7 +38,7 @@
 						<ul>
 							<li><a href="/Formation/SiteWEB/pages/profile.php"><i class="far fa-id-card"></i> Profil</a></li>
 
-							<?php if($countAdm!=0){echo "<li><a href=\"/Formation/SiteWEB/pages/admin.php\"><i class=\"fas fa-users-cog\"></i> Administration</a></li>";} ?>
+							<?php if($countAdm!=0){echo "<li><a href=\"/Formation/SiteWEB/admin\"><i class=\"fas fa-users-cog\"></i> Administration</a></li>";} ?>
 							<li><a href="/Formation/SiteWEB/pages/stats.php"><i class="fas fa-star-half-alt"></i> Statistique</a></li>
 							<li><a href="/Formation/SiteWEB/connexion/deconnexion.php"><i class="fas fa-times-circle"></i> Déconnexion</a></li>
 						</ul>

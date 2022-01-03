@@ -110,6 +110,7 @@
 					echo '<div class="alert alert-success text-center">Login success</div><h1 class="text-center"><a href="mailto:' . $info['mail'] . '">' . $info['displayname'] . '</a></h1>';
 					sleep(1);
 					$_SESSION["user"]=$_POST['username'];
+					$_SESSION["mail"]=$info['mail'];
 					$_SESSION["groupe"]=$info['memberof'].",DC=ALL";;
 					$_SESSION["autoriser"]="oui";
 							header("location:/Formation/SiteWEB/");
