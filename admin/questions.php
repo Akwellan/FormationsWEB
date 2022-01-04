@@ -28,18 +28,16 @@
 <!-- SEUL ADMIN -->
 
 <?php
-	$userDelete = "";
-	$video = "";
-	$userDelete = $_GET["delete"];
-	if($userDelete != "") {
-		$video = $_GET["video"];
-		deleteFormation($userDelete,$video);
+	$id_delete = "";
+	$id_delete = $_GET["delete"];
+	if($id_delete != "") {
+		deleteFormation($id_delete);
 	}
 ?>
 
 <!-- Fonction -->
 <?php
-		function deleteFormation($name,$video) {
+		function deleteFormation($id) {
 
 			$path = "../video/";
 	    include '../bdd/connect.php';
@@ -52,16 +50,15 @@
 				die('Connection failed: ' . $conn->connect_error);
 			}
 
-			$sql = "DELETE FROM `formations` WHERE `formations`.`nom` = '".$name."'";
+			$sql = "DELETE FROM `question` WHERE `question`.`id_formations` = $id;";
 
 			if ($conn->query($sql) === TRUE) {
-				unlink($path.$video);
 			} else {
 				echo 'Error: ' . $sql . '<br>' . $conn->error;
 			}
 
 			include '../bdd/deconnect.php';
-			header("location:/Formation/SiteWEB/admin/formations.php");
+			header("location:/Formation/SiteWEB/admin/questions.php");
 		}
 
   // Fonction Remplissage ligne
@@ -75,20 +72,17 @@
       </td>
       <td>".$user."</td>
       <td>".$desc."</td>
-      <td style=\"text-align:center\"><span class=\"role user\" >6</span></td>
+      <td style=\"text-align:center\"><span class=\"role user\" >".countQuestion($id)."</span></td>
 
       <td>
 				<div class=\"table-data-feature\">
-						<button data-modal=\"modalFormation\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Ajouter une question pour la formation ".$user."\">
+						<button data-modal=\"modal".$id."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Ajouter une question pour la formation ".$user."\">
 								<i class=\"zmdi zmdi-plus\"></i>
 						</button>
-							<a href=\"info-user.php?user=".$user."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Liste des questions de la formation ".$user."\">
-									<i class=\"zmdi zmdi-format-align-left\"></i>
-							</a>
-						<a href=\"info-user.php?user=".$user."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Information de la formation ".$user."\">
-								<i class=\"zmdi zmdi-more\"></i>
+						<a href=\"info-question.php?titre=".$user."&id=".$id."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Liste des questions de la formation ".$user."\">
+								<i class=\"zmdi zmdi-format-align-left\"></i>
 						</a>
-						<button onclick=\"demDelete('".$user."', '".$video."')\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Supprimer la formation ".$user."\">
+						<button onclick=\"demDelete('".$user."', '".$id."')\" class=\"items\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Supprimer toutes les questions de la formation ".$user."\">
 								<i class=\"zmdi zmdi-delete\"></i>
 						</button>
           </div>
@@ -96,6 +90,100 @@
     </tr><tr class=\"spacer\"></tr>";
   }
   // Fonction Remplissage ligne
+
+
+		// Fonction remplissage modal
+		function rempliModal($id,$nom,$Groupe,$video,$desc) {
+			echo "<!-- MODAL Update formations -->
+	          <div id=\"modal".$id."\" class=\"modal\">
+	            <br>
+	            <div class=\"modal-content\">
+	              <div class=\"contact-form\">
+	                <a class=\"close\">&times;</a>
+	                  <form action=\"upload-questions.php?id=".$id."\" method=\"post\" enctype=\"multipart/form-data\">
+	                  <h2 style=\"text-align:center\">Ajouter une question pour la formation : \"".$nom."\"</h2>
+	                  <br>
+	                  <div>
+	                    <span>Titre de la question :</span>
+	                    <input class=\"fname\" type=\"text\" name=\"titre\" placeholder=\"Indiquer un titre pour la question\" required=\"Le nom de la question est requis !\">
+
+											<br>
+
+                      <span>Réponse 1 :</span>
+											<input class=\"fname\" type=\"text\" name=\"rep1\" placeholder=\"Réponse 1\" required=\"Réponse n°1 !\">
+
+	                    <span>Réponse 2 :</span>
+	                    <input class=\"fname\" type=\"text\" name=\"rep2\" placeholder=\"Réponse 2\" required=\"Réponse n°2 !\">
+	                    <span>Réponse 3 :</span>
+	                    <input class=\"fname\" type=\"text\" name=\"rep3\" placeholder=\"Réponse 3\" required=\"Réponse n°3 !\">
+
+											<br>
+
+											<div class=\"row form-group\">
+                        <div class=\"col col-md-3\">
+                            <label class=\" form-control-label\">Réponse valide :</label>
+                        </div>
+                        <div class=\"col col-md-9\">
+                            <div class=\"form-check\">
+                                <div class=\"checkbox\">
+                                    <label for=\"checkbox1\" class=\"form-check-label \">
+                                        <input type=\"checkbox\" id=\"checkbox1\" name=\"rep_valide1\" value=\"rep_valide1\" class=\"form-check-input\">Réponse n°1
+                                    </label>
+                                </div>
+                                <div class=\"checkbox\">
+                                    <label for=\"checkbox2\" class=\"form-check-label \">
+                                        <input type=\"checkbox\" id=\"checkbox2\" name=\"rep_valide2\" value=\"rep_valide2\" class=\"form-check-input\"> Réponse n°2
+                                    </label>
+                                </div>
+                                <div class=\"checkbox\">
+                                    <label for=\"checkbox3\" class=\"form-check-label \">
+                                        <input type=\"checkbox\" id=\"checkbox3\" name=\"rep_valide3\" value=\"rep_valide3\" class=\"form-check-input\"> Réponse n°3
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+									  <div>
+                  <span>Question posé :</span>
+                  <textarea rows=\"6\" name=\"desc\" required=\"Il est obligatoire de demandé une question !\"></textarea>
+                </div>
+              </div>
+              <button type=\"submit\" href=\"/\"><i class=\"zmdi zmdi-plus\"></i> Ajouter la question</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- MODAL Update formations -->";
+		}
+		// Fonction remplissage modal
+
+
+		function countQuestion($id) {
+			include '../bdd/connect.php';
+			$dbname = "formations";
+
+			$nbQues = 0;
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+				die("Connection failed: " . $conn->connect_error);
+			}
+			$sql = "SELECT COUNT(*) FROM `question` WHERE `id_formations` = ".$id.";";
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+				// output data of each row
+				while($row = $result->fetch_assoc()) {
+						$nbQues = $row["COUNT(*)"];
+				}
+			}
+
+			include '../bdd/deconnect.php';
+			return $nbQues;
+		}
 
 ?>
 <!-- Fonction -->
@@ -324,6 +412,7 @@
                                               $result = $conn->query($sql);
                                               if ($result->num_rows > 0) {
                                                 while($row = $result->fetch_assoc()) {
+																									rempliModal($row["id"],$row["nom"],$row["groupe"],$row["video"],$row["description"]);
                                                   setColTable($row["id"],$row["nom"],$row["description"],$row["groupe"],$row["video"]);
                                                 }
                                               }
@@ -395,7 +484,7 @@
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="js/formations.js">
+    <script src="js/delete.js">
     </script>
 
     <!-- Main JS-->

@@ -1,8 +1,8 @@
 
-function demDelete(ours, chevre) {
-  let text = 'Voulez-vous supprimer la formation : '+ours;
+function demDelete(ours, chevre, id) {
+  let text = 'Voulez-vous supprimer la formation : \"'+ours+'\" ainsi que toutes ces questions ?';
   if (window.confirm(text)) {
-    document.location.href='?delete='+ours+'&video='+chevre;
+    document.location.href='?delete='+ours+'&video='+chevre+'&id='+id;
   }
 }
 

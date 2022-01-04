@@ -33,14 +33,20 @@
 	$userDelete = $_GET["delete"];
 	if($userDelete != "") {
 		$video = $_GET["video"];
-		deleteFormation($userDelete,$video);
+		$id = $_GET["id"];
+		deleteFormation($userDelete,$video,$id);
 	}
 ?>
 
 <!-- Fonction -->
 <?php
-		function deleteFormation($name,$video) {
+		function deleteFormation($name,$video,$id) {
+				deleteQuestionID($id);
+				deleteReussiteID($id);
+				deleteForma($name,$video);
+		}
 
+		function deleteForma($name,$video) {
 			$path = "../video/";
 	    include '../bdd/connect.php';
 	    $dbname = "formations";
@@ -61,8 +67,56 @@
 			}
 
 			include '../bdd/deconnect.php';
-			header("location:/Formation/SiteWEB/admin/formations.php");
+			//header("location:/Formation/SiteWEB/admin/formations.php");
 		}
+		function deleteQuestionID($id) {
+
+			$path = "../video/";
+	    include '../bdd/connect.php';
+	    $dbname = "formations";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+				die('Connection failed: ' . $conn->connect_error);
+			}
+
+			$sql = "DELETE FROM `question` WHERE `question`.`id_formations` = $id;";
+
+			if ($conn->query($sql) === TRUE) {
+			} else {
+				echo 'Error: ' . $sql . '<br>' . $conn->error;
+			}
+
+			include '../bdd/deconnect.php';
+			//header("location:/Formation/SiteWEB/admin/questions.php");
+		}
+
+		function deleteReussiteID($id) {
+
+			$path = "../video/";
+	    include '../bdd/connect.php';
+	    $dbname = "formations";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+				die('Connection failed: ' . $conn->connect_error);
+			}
+
+			$sql = "DELETE FROM `reussite` WHERE `reussite`.`id_formations` = $id;";
+
+			if ($conn->query($sql) === TRUE) {
+			} else {
+				echo 'Error: ' . $sql . '<br>' . $conn->error;
+			}
+
+			include '../bdd/deconnect.php';
+			//header("location:/Formation/SiteWEB/admin/questions.php");
+		}
+
 
   // Fonction Remplissage ligne
   function setColTable($id,$user,$desc,$groupe,$video) {
@@ -84,7 +138,7 @@
           <div class=\"table-data-feature\">
 							<button class=\"button\" data-modal=\"modal".$id."\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Modifier la formation ".$user."\">Modifier</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-              <button onclick=\"demDelete('".$user."', '".$video."')\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Supprimer la formations ".$user."\">
+              <button onclick=\"demDelete('".$user."', '".$video."', '".$id."')\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Supprimer la formations ".$user."\">
                   <i class=\"zmdi zmdi-delete\"></i>
               </button>
           </div>

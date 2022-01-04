@@ -5,12 +5,11 @@
     <title>Formulaire d'upload de fichiers</title>
 </head>
 <body>
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-        <h2>Upload Fichier</h2>
-        <label for="fileUpload">Fichier:</label>
-        <input type="file" name="photo" id="fileUpload">
-        <input type="submit" name="submit" value="Upload">
-        <p><strong>Note:</strong> Seuls les formats .jpg, .jpeg, .jpeg, .gif, .png sont autorisés jusqu'à une taille maximale de 5 Mo.</p>
-    </form>
+    <?php $rep = "test|oui|stiti";
+    $reponse = explode("|", $rep);
+    echo "$reponse[0]<br>";
+    echo "$reponse[1]<br>";
+    echo "$reponse[2]<br>";
+    ?>
 </body>
 </html>
