@@ -102,7 +102,7 @@
 
 	// Fonction remplissage modal
 	function rempliModal($titre,$desc,$rep1,$rep2,$rep3,$rep_valide1,$rep_valide2,$rep_valide3,$id,$id_forma,$titre_forma) {
-		echo "<!-- MODAL Update formations -->
+		echo "
 					<div id=\"modal".$id."\" class=\"modal\">
 						<br>
 						<div class=\"modal-content\">
@@ -151,7 +151,6 @@
 													</div>
 											</div>
 									</div>
-
 									<div>
 								<span>Question posé :</span>
 								<textarea rows=\"6\" name=\"desc\" required=\"Il est obligatoire de demandé une question !\">".$desc."</textarea>
@@ -162,7 +161,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- MODAL Update formations -->";
+		";
 	}
 	// Fonction remplissage modal
 
@@ -446,53 +445,22 @@
 
 																							    $reponse_valide = explode("|", $rep_valide_bdd);
 
-																									$reponse_valide_max = sizeof($reponse_valide);
-
-																									$key = "";$key1 = "";$key2 = "";
 																									$reponse_valide_checked1 = "";$reponse_valide_checked2 = "";$reponse_valide_checked3 = "";
 
-																									switch ($reponse_valide_max) {
-																										case 1:
-																											$key = array_search($reponse_valide[0], $reponse)+1;
-																											break;
-																										case 2:
-																											$key = array_search($reponse_valide[0], $reponse)+1;
-																											$key1 = array_search($reponse_valide[1], $reponse)+1;
-																											break;
-																										case 3:
-																											$key = array_search($reponse_valide[0], $reponse)+1;
-																											$key1 = array_search($reponse_valide[1], $reponse)+1;
-																											$key2 = array_search($reponse_valide[2], $reponse)+1;
-																											break;
-																									}
-
-																									if($key == 1) {
-																										$reponse_valide_checked1 = "checked";
-																									} else if($key == 2) {
-																										$reponse_valide_checked2 = "checked";
-																									} else if($key == 3) {
-																										$reponse_valide_checked3 = "checked";
-																									}
-
-																									if($key1 == 1) {
-																										$reponse_valide_checked1 = "checked";
-																									} else if($key1 == 2) {
-																										$reponse_valide_checked2 = "checked";
-																									} else if($key1 == 3) {
-																										$reponse_valide_checked3 = "checked";
-																									}
-
-																									if($key2 == 1) {
-																										$reponse_valide_checked1 = "checked";
-																									} else if($key2 == 2) {
-																										$reponse_valide_checked2 = "checked";
-																									} else if($key2 == 3) {
-																										$reponse_valide_checked3 = "checked";
+																									for ($x=0;$x<sizeof($reponse_valide);$x++) {
+																										if($reponse_valide[$x] == 0) {
+																											$reponse_valide_checked1 = "checked";
+																										} else if($reponse_valide[$x] == 1) {
+																											$reponse_valide_checked2 = "checked";
+																										} else if($reponse_valide[$x] == 2) {
+																											$reponse_valide_checked3 = "checked";
+																										}
 																									}
 
 																									rempliModal($row["nom"],$row["description"],$reponse[0],$reponse[1],$reponse[2],$reponse_valide_checked1,$reponse_valide_checked2,$reponse_valide_checked3,$row["id"],$id_forma,$titre_forma);
 
                                                   setColTable($row["nom"],$row["description"],$row["reponse"],$row["reponse_vrai"],$row["id"],$id_forma,$titre_forma);
+																									
                                                 }
                                               }
                                               include '../bdd/deconnect.php';

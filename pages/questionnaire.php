@@ -43,8 +43,9 @@
 										if ($result->num_rows > 0) {
 										  // output data of each row
 										  while($row = $result->fetch_assoc()) {
-												echo "<header class='style1'><h2>Questionnaire : ".$row["nom"]."</h2>";
+												echo "<header class=\"style1\"><h2>Questionnaire : ".$row["nom"]."</h2>";
 												echo "<p>Bonne chance pour votre QCM !</p></header>";
+												echo "<p>UNE OU PLUSIEURS RÉPONSE SONT ATTENDU !</p>";
 										  }
 										}
 
@@ -71,7 +72,7 @@
 
 										if ($result->num_rows > 0) {
 											while($row = $result->fetch_assoc()) {
-												echo "<script type='text/javascript'>numQues = ".$row["COUNT(*)"].";</script>";
+												echo "<script type=\"text/javascript\">numQues = ".$row["COUNT(*)"].";</script>";
 											}
 										}
 										include '../bdd/deconnect.php';
@@ -96,7 +97,12 @@
 										if ($result->num_rows > 0) {
 											$i = 0;
 											while($row = $result->fetch_assoc()) {
-												echo "<script type='text/javascript'>answers[".$i."] = '".$row["reponse_vrai"]."';</script>";
+												$repVraiSTR = "";
+												$repVrai=explode('|',$row["reponse_vrai"]);
+												for ($x=0;$x<sizeof($repVrai)-1;$x++) {
+													$repVraiSTR .= $row["id"].$repVrai[$x]."|";
+												}
+												echo "<script type=\"text/javascript\">answers[".$i."] = \"".$repVraiSTR."\";</script>";
 												$i++;
 											}
 										}
@@ -106,7 +112,9 @@
 
 									<form class="quiz" name="quiz" method="post">
 
-										<?php	echo "<script type='text/javascript'>var user = '".$_SESSION['user']."';var nb_ques = ".$nb_qcm.";</script>";?>
+										<?php	echo "<script type=\"text/javascript\">var user = \"".$_SESSION['user']."\";var nb_ques = ".$nb_qcm.";</script>";?>
+
+
 
 										<!-- SELECT REPONSE -->
 										<?php
@@ -124,7 +132,7 @@
 											$result = $conn->query($sql);
 
 											$i = 1;
-											$nbques = 1;
+											$nbques = 0;
 											if ($result->num_rows > 0) {
 												// output data of each row
 												while($row = $result->fetch_assoc()) {
@@ -137,16 +145,23 @@
 													echo "<b>".$numQuestion.") ".$titre." -> ".$description."</b>";
 													$nbQuestions = sizeof($questions);
 													for ($x=0;$x<$nbQuestions;$x++) {
-														echo "<div class='form-group'><input type='checkbox' name='q".$i."' value='".$questions[$x]."' id='".$questions[$x]."'><label class='rep' for='".$questions[$x]."'> ".$questions[$x]."</label></div>";
-														$nbques = "nbrep : ".$x;
+														$reponse = $questions[$x];
+														// $reponse = str_replace("\\","&#92;",$reponse);
+
+														$numeroQuestion = $row["id"].$x;
+
+														echo "<div class=\"form-group\">
+																	  <input type=\"checkbox\" name=\"q".$i."\" value=\"".$numeroQuestion."\" id=\"".$numeroQuestion."\">
+																	  <label class=\"rep\" for=\"".$numeroQuestion."\">".$reponse."</label>
+																	</div>";
 													}
-													$i++;
 													echo "<br>";
+													$i++;
 												}
-												$nbques++;
-												echo "<script type='text/javascript'>var numChoi = ".$nbques.";</script>";
-												echo "<input type='button' name='Valider' value='Valider et envoyer les réponses' onClick='main(this.form);'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type='reset' value='Redémarrer le QCM'>&nbsp;&nbsp;&nbsp<p><br>
+												$nb_Question = $i-1;
+												echo "<script>var numQues = ".$nb_Question.";</script>";
+												echo "<input type=\"button\" name=\"Valider\" value=\"Valider et envoyer les réponses\" onClick=\"main(this.form);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type=\"reset\" value=\"Redémarrer le QCM\">&nbsp;&nbsp;&nbsp;<p><br>
 												";
 											} else {
 												echo "Aucune question n'est disponible sur ce questionnaire !<br>Veuillez contacter un administarteur.";

@@ -8,7 +8,7 @@ var answers = new Array();
 
 function ConfirmMessage() {
    let URL = "../bdd/insert-reussi.php?db=formations&score="+score+"&name="+user+"&numQCM="+nb_ques;
-   if (confirm("Avez vous fini le QCM ?")) {
+   if (confirm("Avez vous fini le QCM ? "+score+" "+numQues)) {
        // Clic sur OK
        document.location.href=URL;
    }
@@ -18,6 +18,7 @@ function getScore(form) {
   score = 0;
   var currElt;
   var currSelection;
+  var rempSelect = "";
   var bon = false;
 
   for (i=0; i<numQues; i++) {
@@ -25,13 +26,15 @@ function getScore(form) {
     bon=false;
     for (j=0; j<numChoi; j++) {
       currSelection = form.elements[currElt + j];
-      if ((currSelection.checked)&&(answers[i].indexOf(currSelection.value) != -1)) {
+      rempSelect = currSelection.value;
+      rempSelect = rempSelect.replaceAll("'", "\'");
+      if ((currSelection.checked)&&(answers[i].indexOf(rempSelect) != -1)) {
         bon=true;}
-      if ((currSelection.checked)&&(answers[i].indexOf(currSelection.value) == -1)) {
+      if ((currSelection.checked)&&(answers[i].indexOf(rempSelect) == -1)) {
         bon=false;
         break;
         }
-      if (!(currSelection.checked)&&(answers[i].indexOf(currSelection.value) != -1)) {
+      if (!(currSelection.checked)&&(answers[i].indexOf(rempSelect) != -1)) {
         bon=false;
         break;
         }

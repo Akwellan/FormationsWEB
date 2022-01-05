@@ -18,6 +18,7 @@
     // $sql = "INSERT INTO `question` (`id`, `nom`, `description`, `reponse`, `reponse_vrai`, `id_formations`) VALUES (NULL, '".$nom."', '".$desc."', '".$rep."', '".$rep_vrai."', '".$id."');";
     $sql = "UPDATE `question` SET `nom` = '".$nom."', `description` = '".$desc."', `reponse` = '".$rep."', `reponse_vrai` = '".$rep_vrai."' WHERE `question`.`id` = ".$id.";";
 
+        $sql = str_replace("\\","\\\\",$sql);
     if ($conn->query($sql) === TRUE) {
     } else {
       echo 'Error: ' . $sql . '<br>' . $conn->error;
@@ -51,9 +52,9 @@
 
         $rep = "$rep1|$rep2|$rep3";
         $rep_valide = "";
-        if($rep_valide1!=""){$rep_valide.=$rep1."|";}
-        if($rep_valide2!=""){$rep_valide.=$rep2."|";}
-        if($rep_valide3!=""){$rep_valide.=$rep3."|";}
+        if($rep_valide1!=""){$rep_valide.="0|";}
+        if($rep_valide2!=""){$rep_valide.="1|";}
+        if($rep_valide3!=""){$rep_valide.="2|";}
 
         $titre = str_replace("'","\'",$titre);
         $desc = str_replace("'","\'",$desc);
