@@ -1,4 +1,12 @@
 <?php
+
+
+    function after ($ours, $inthat)
+    {
+        if (!is_bool(strpos($inthat, $ours)))
+        return substr($inthat, strpos($inthat,$ours)+strlen($ours));
+    };
+
   $erreur="";
   function auth($username, $password, $domain = 'icare-lims', $endpoint = 'ldap://icare-lims.local', $dc = 'dc=icare-lims,dc=local') {
   	$ldap = @ldap_connect($endpoint);
@@ -113,7 +121,8 @@
 					$_SESSION["mail"]=$info['mail'];
 					$_SESSION["groupe"]=$info['memberof'].",DC=ALL";;
 					$_SESSION["autoriser"]="oui";
-							header("location:/Formation/SiteWEB/");
+          $afterLink = after('?', $_SERVER['REQUEST_URI']);
+					header("location:/Formation/SiteWEB/".$afterLink);
 				}
 			}
 			?>

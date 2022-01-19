@@ -538,7 +538,6 @@ function deleteFormation($name) {
                                               include '../bdd/deconnect.php';
                                             ?>
 
-
                                         </tbody>
                                     </table>
                                 </div>

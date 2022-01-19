@@ -8,7 +8,7 @@ var answers = new Array();
 
 function ConfirmMessage() {
    let URL = "../bdd/insert-reussi.php?db=formations&score="+score+"&name="+user+"&numQCM="+nb_ques;
-   if (confirm("Avez vous fini le QCM ? "+score+" "+numQues)) {
+   if (confirm("Avez vous fini le QCM ?")) {
        // Clic sur OK
        document.location.href=URL;
    }
